@@ -18,23 +18,12 @@ Route::get('/', function () {
 
     return view('welcome', ['links' => $links]);
 });
-Route::get('/submit', function () {
-    return view('submit');
-});
+Route::get('/link/submit','LinkController@submit')->name('submit');
 
 
 
-Route::post('/submit', function (Request $request) {
-    $data = $request->validate([
-        'title' => 'required|max:255',
-        'url' => 'required|url|max:255',
-        'description' => 'required|max:255',
-    ]);
+Route::post('/link/submit', 'LinkController@add')->name('add');
 
-    $link = tap(new App\Link($data))->save();
-
-    return redirect('/');
-});
 
 Auth::routes();
 
